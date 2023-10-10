@@ -15,20 +15,20 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/hello", "/api/hello");
+        return (web) -> web.ignoring().requestMatchers("/h2-console/**", "/favicon.ico");
     }
     @Bean
     protected SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .requestMatchers("/api/hello").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/api/hello").permitAll() //api/hello는 권한이 없어도 된다
+                .anyRequest().authenticated(); //그 외 모든 페이지는 권한이 있어야한다
 
-            .and()
-                .formLogin() //여기 왜 빨간줄 뜨는지 모르겠음ㅠ
-                .loginPage("/api/hello")
-                .loginProcessingUrl("/authenticate")
-                .permitAll();
+//            .and()
+//                .formLogin() //여기 왜 빨간줄 뜨는지 모르겠음ㅠ
+//                .loginPage("/api/hello")
+//                .loginProcessingUrl("/authenticate")
+//                .permitAll();
 //                .successHandler("api/success")
 //                .failureHandler("/api/fail");
 
